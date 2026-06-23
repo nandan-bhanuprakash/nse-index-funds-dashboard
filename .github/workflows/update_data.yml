@@ -1,0 +1,36 @@
+name: Daily Index Funds Data Update
+
+on:
+  schedule:
+    # Run every day at 18:30 IST (13:00 UTC), after AMFI releases daily NAVs
+    - cron: '0 13 * * *'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  update-database:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # Required to push database updates back to the repo
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Execute compilation crawler
+      run: |
+        python compile_data.py
+
+    - name: Commit and Push database updates
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add funds_data.json
+        # Commit only if there are changes
+        git diff-index --quiet HEAD || git commit -m "auto: update index funds database"
+        git push

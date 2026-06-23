@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSE Index Funds Live Dashboard | Passive Investing Tracker India</title>
+    <meta name="description" content="An interactive, real-time comparison dashboard for Index Funds in India (NSE) tracking AUM, expense ratios, tracking errors, and rolling returns.">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Dashboard Header -->
+        <header>
+            <div class="logo-section">
+                <h1><i class="fa-solid fa-chart-line-up" style="margin-right: 8px; color: var(--accent-indigo);"></i>NSE Index Funds Live Dashboard</h1>
+                <p>Compare expense ratios, Assets Under Management (AUM), tracking errors, and rolling returns (6M, 1Y, 2Y, 3Y, 5Y) across categories.</p>
+            </div>
+            <div class="last-updated" id="last-updated-date">
+                Last Updated: Fetching...
+            </div>
+        </header>
+
+        <!-- Stats Overview Cards -->
+        <section class="stats-overview" aria-label="Stats Summary">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-vault"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Total Index Funds</div>
+                    <div class="stat-value" id="stat-total-funds">-</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Total AUM Tracked</div>
+                    <div class="stat-value" id="stat-total-aum">-</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search and Filter Controls -->
+        <section class="controls-card" aria-label="Dashboard Filters">
+            <div class="control-group">
+                <label for="search-fund">Search Fund Name or AMC</label>
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-fund" class="search-input" placeholder="Type UTI, Motilal, Nifty, Axis...">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="filter-category">Index Category</label>
+                <select id="filter-category" class="select-input">
+                    <option value="all">All Categories</option>
+                    <option value="Large Cap (Nifty 50)">Large Cap (Nifty 50)</option>
+                    <option value="Large Cap (Nifty Next 50)">Large Cap (Nifty Next 50)</option>
+                    <option value="Mid Cap (Nifty Midcap 150)">Mid Cap (Nifty Midcap 150)</option>
+                    <option value="Small Cap (Nifty Smallcap 250)">Small Cap (Nifty Smallcap 250)</option>
+                    <option value="Sectoral / Thematic">Sectoral & Thematic</option>
+                    <option value="International">International Indexes</option>
+                    <option value="Debt">Debt Target Maturity</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="filter-amc">Fund House (AMC)</label>
+                <select id="filter-amc" class="select-input">
+                    <option value="all">All AMCs</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="filter-expense">Expense Ratio Tier</label>
+                <select id="filter-expense" class="select-input">
+                    <option value="all">All Expense Ratios</option>
+                    <option value="low">Ultra Low (< 0.15%)</option>
+                    <option value="mid">Medium (0.15% - 0.30%)</option>
+                    <option value="high">High (> 0.30%)</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Content Grid -->
+        <main class="workspace-grid">
+            <!-- Left Side: Interactive Fund Grid Table -->
+            <section class="funds-list-card" aria-label="Index Funds Table">
+                <div class="card-header">
+                    <h2>Index Funds Comparison</h2>
+                    <span class="fund-count-badge" id="visible-funds-count">0 Funds</span>
+                </div>
+                <div class="table-wrapper">
+                    <table class="funds-table" id="funds-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="name" class="sorted-asc">Scheme Name</th>
+                                <th data-sort="category">Category</th>
+                                <th data-sort="expense">Expense Ratio</th>
+                                <th data-sort="aum">AUM (₹ Cr)</th>
+                                <th data-sort="tracking_error">TE (%)</th>
+                                <th data-sort="return_6M">6M Ret</th>
+                                <th data-sort="return_1Y">1Y Ret</th>
+                                <th data-sort="return_3Y">3Y Ret</th>
+                                <th data-sort="return_5Y">5Y Ret</th>
+                            </tr>
+                        </thead>
+                        <tbody id="funds-table-body">
+                            <!-- Rows injected dynamically by app.js -->
+                            <tr>
+                                <td colspan="9" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                                    <i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px;"></i>Loading index funds database...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Right Side: Fund Details and Live NAV Chart -->
+            <section class="detail-panel" aria-label="Selected Fund Details">
+                <div id="detail-card-empty" class="detail-card-empty">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>No Fund Selected</h3>
+                    <p>Click on any index fund row in the table to view its historical NAV growth timeline and dynamic chart analysis.</p>
+                </div>
+
+                <div id="detail-card-main" class="detail-card hidden">
+                    <div class="detail-header">
+                        <h3 id="detail-name">Fund Name</h3>
+                        <span class="benchmark-label">Benchmark: <strong id="detail-benchmark">Nifty 50</strong></span>
+                    </div>
+
+                    <div class="detail-stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-item-label">Expense Ratio</div>
+                            <div class="stat-item-value text-number" id="detail-expense">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-item-label">AUM (₹ Crores)</div>
+                            <div class="stat-item-value text-number" id="detail-aum">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-item-label">Tracking Error</div>
+                            <div class="stat-item-value text-number" id="detail-tracking-error">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-item-label">Latest NAV</div>
+                            <div class="stat-item-value text-number" id="detail-latest-nav">-</div>
+                        </div>
+                    </div>
+
+                    <div class="returns-timeline">
+                        <h4>Rolling Returns Breakdown</h4>
+                        <div class="timeline-grid">
+                            <div class="timeline-node">
+                                <div class="timeline-node-period">6 Months</div>
+                                <div class="timeline-node-val text-number" id="detail-ret-6M">-</div>
+                            </div>
+                            <div class="timeline-node">
+                                <div class="timeline-node-period">1 Year</div>
+                                <div class="timeline-node-val text-number" id="detail-ret-1Y">-</div>
+                            </div>
+                            <div class="timeline-node">
+                                <div class="timeline-node-period">2 Years</div>
+                                <div class="timeline-node-val text-number" id="detail-ret-2Y">-</div>
+                            </div>
+                            <div class="timeline-node">
+                                <div class="timeline-node-period">3 Years</div>
+                                <div class="timeline-node-val text-number" id="detail-ret-3Y">-</div>
+                            </div>
+                            <div class="timeline-node">
+                                <div class="timeline-node-period">5 Years</div>
+                                <div class="timeline-node-val text-number" id="detail-ret-5Y">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Chart Container -->
+                    <div class="chart-container">
+                        <div id="chart-loading" class="chart-loading-overlay hidden">
+                            <div class="spinner"></div>
+                            <span>Loading live NAV history...</span>
+                        </div>
+                        <canvas id="nav-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
