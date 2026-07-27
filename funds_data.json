@@ -2648,15 +2648,15 @@
     "aum": null,
     "expense_ratio": null,
     "tracking_error": null,
-    "latest_nav": 48.2783,
+    "latest_nav": 48.7366,
     "fund_house": "Taurus",
-    "latest_date": "24-07-2026",
+    "latest_date": "27-07-2026",
     "returns": {
-      "6M": -4.91,
-      "1Y": -4.9,
-      "2Y": -0.96,
-      "3Y": 6.71,
-      "5Y": 8.64
+      "6M": -4.49,
+      "1Y": -2.58,
+      "2Y": -1.32,
+      "3Y": 7.1,
+      "5Y": 8.98
     }
   },
   {
