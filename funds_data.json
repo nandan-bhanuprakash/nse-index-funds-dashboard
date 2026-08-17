@@ -988,44 +988,6 @@
     }
   },
   {
-    "scheme_code": "149966",
-    "name": "HSBC CRISIL IBX 50:50 Gilt Plus SDL Apr 2028 Index Fund - Direct - Growth",
-    "category": "Debt",
-    "benchmark": "Crisil Gilt Index",
-    "aum": null,
-    "expense_ratio": null,
-    "tracking_error": null,
-    "latest_nav": 13.3517,
-    "fund_house": "HSBC",
-    "latest_date": "14-08-2026",
-    "returns": {
-      "6M": 2.7,
-      "1Y": 5.73,
-      "2Y": 7.24,
-      "3Y": 7.6,
-      "5Y": null
-    }
-  },
-  {
-    "scheme_code": "151479",
-    "name": "HSBC CRISIL IBX Gilt June 2027 Index Fund - Direct - Growth",
-    "category": "Debt",
-    "benchmark": "Crisil Gilt Index",
-    "aum": null,
-    "expense_ratio": null,
-    "tracking_error": null,
-    "latest_nav": 12.7574,
-    "fund_house": "HSBC",
-    "latest_date": "14-08-2026",
-    "returns": {
-      "6M": 2.72,
-      "1Y": 5.68,
-      "2Y": 7.02,
-      "3Y": 7.44,
-      "5Y": null
-    }
-  },
-  {
     "scheme_code": "153411",
     "name": "ICICI Prudential CRISIL-IBX Financial Services 3-6 Months Debt Index Fund - Direct Plan - Growth",
     "category": "Debt",
@@ -2223,25 +2185,6 @@
     }
   },
   {
-    "scheme_code": "151157",
-    "name": "HSBC NIFTY 50 INDEX FUND - Direct Growth",
-    "category": "Large Cap (Nifty 50)",
-    "benchmark": "Nifty 50",
-    "aum": null,
-    "expense_ratio": null,
-    "tracking_error": null,
-    "latest_nav": 28.8633,
-    "fund_house": "HSBC",
-    "latest_date": "14-08-2026",
-    "returns": {
-      "6M": -3.66,
-      "1Y": -0.2,
-      "2Y": 1.42,
-      "3Y": 8.84,
-      "5Y": null
-    }
-  },
-  {
     "scheme_code": "153161",
     "name": "ICICI Prudential Nifty 500 Index Fund - Direct Plan - Growth",
     "category": "Large Cap (Nifty 50)",
@@ -2713,25 +2656,6 @@
       "1Y": 12.59,
       "2Y": 2.38,
       "3Y": 19.54,
-      "5Y": null
-    }
-  },
-  {
-    "scheme_code": "151160",
-    "name": "HSBC NIFTY NEXT 50 INDEX FUND - Direct Growth",
-    "category": "Large Cap (Nifty Next 50)",
-    "benchmark": "Nifty Next 50",
-    "aum": null,
-    "expense_ratio": null,
-    "tracking_error": null,
-    "latest_nav": 32.7058,
-    "fund_house": "HSBC",
-    "latest_date": "14-08-2026",
-    "returns": {
-      "6M": 8.5,
-      "1Y": 12.32,
-      "2Y": 2.23,
-      "3Y": 19.43,
       "5Y": null
     }
   },
